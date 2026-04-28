@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Quiz — Mamografia</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#f0f4f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.container{background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.10);max-width:720px;width:100%;padding:40px 36px}
+h1{color:#1a3a5c;font-size:22px;margin-bottom:6px}
+.subtitle{color:#64748b;font-size:13px;margin-bottom:30px}
+#start-screen{text-align:center}
+#start-screen h1{font-size:26px;margin-bottom:10px}
+.btn-start{background:#1a3a5c;color:#fff;border:none;padding:14px 40px;border-radius:10px;font-size:16px;cursor:pointer;margin-top:20px;transition:background .2s}
+.btn-start:hover{background:#2c5282}
+.progress-wrap{background:#e2e8f0;border-radius:99px;height:8px;margin-bottom:24px}
+.progress-bar{background:#2563eb;height:8px;border-radius:99px;transition:width .3s}
+.progress-label{font-size:12px;color:#64748b;margin-bottom:8px}
+.question-text{font-size:15px;font-weight:600;color:#1e293b;line-height:1.6;margin-bottom:20px}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt-btn{background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;padding:12px 16px;text-align:left;font-size:14px;cursor:pointer;transition:all .15s;color:#1e293b;line-height:1.5}
+.opt-btn:hover:not(:disabled){background:#eff6ff;border-color:#93c5fd}
+.opt-btn.correct{background:#f0fdf4;border-color:#16a34a;color:#15803d;font-weight:600}
+.opt-btn.wrong{background:#fef2f2;border-color:#dc2626;color:#b91c1c}
+.opt-btn:disabled{cursor:default}
+.explanation{background:#fffbeb;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:12px 14px;margin-top:16px;font-size:13px;color:#78350f;line-height:1.6;display:none}
+.nav{margin-top:24px;display:flex;justify-content:flex-end}
+.btn-next{background:#2563eb;color:#fff;border:none;padding:11px 28px;border-radius:8px;font-size:14px;cursor:pointer;display:none;transition:background .2s}
+.btn-next:hover{background:#1d4ed8}
+#result-screen{text-align:center;display:none}
+.score-circle{width:120px;height:120px;border-radius:50%;background:#eff6ff;border:6px solid #2563eb;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px}
+.score-pct{font-size:28px;font-weight:700;color:#1a3a5c}
+.score-label{font-size:11px;color:#64748b}
+.stats{display:flex;gap:20px;justify-content:center;margin-bottom:24px}
+.stat{background:#f8fafc;border-radius:10px;padding:14px 24px}
+.stat-n{font-size:22px;font-weight:700}
+.stat-n.green{color:#16a34a}.stat-n.red{color:#dc2626}
+.stat-lbl{font-size:12px;color:#64748b}
+.btn-restart{background:#1a3a5c;color:#fff;border:none;padding:12px 32px;border-radius:8px;font-size:15px;cursor:pointer;transition:background .2s}
+.btn-restart:hover{background:#2c5282}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div id="start-screen">
+    <div style="font-size:36px;margin-bottom:12px">🩻</div>
+    <h1>Mamografia</h1>
+    <p class="subtitle">Saúde da Mulher — Mastologia</p>
+    <p style="color:#475569;font-size:14px;margin-top:10px">18 questões de múltipla escolha com gabarito comentado</p>
+    <button class="btn-start" onclick="startQuiz()">Começar</button>
+  </div>
+
+  <div id="quiz-screen" style="display:none">
+    <div class="progress-label" id="progress-label"></div>
+    <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+    <div class="question-text" id="question-text"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+    <div class="nav"><button class="btn-next" id="btn-next" onclick="nextQuestion()">Proxima →</button></div>
+  </div>
+
+  <div id="result-screen">
+    <h1 style="margin-bottom:6px">Resultado</h1>
+    <p class="subtitle" style="margin-bottom:24px">Mamografia</p>
+    <div class="score-circle">
+      <span class="score-pct" id="score-pct"></span>
+      <span class="score-label">acertos</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n green" id="stat-correct"></div><div class="stat-lbl">Acertos</div></div>
+      <div class="stat"><div class="stat-n red" id="stat-wrong"></div><div class="stat-lbl">Erros</div></div>
+      <div class="stat"><div class="stat-n" id="stat-total"></div><div class="stat-lbl">Total</div></div>
+    </div>
+    <button class="btn-restart" onclick="restartQuiz()">Refazer quiz</button>
+  </div>
+
+</div>
+<script>
+const rawQuestions = [
+  {
+    question: "A mamografia é considerada o exame padrão-ouro para rastreamento do câncer de mama pois é capaz de detectar:",
+    options: [
+      "Microcalcificações (sinal mais precoce) e distorções arquiteturais, antes de qualquer sintoma clínico",
+      "Apenas nódulos palpáveis maiores de 1 cm na fase clínica",
+      "Exclusivamente lesões vascularizadas ao Doppler colorido",
+      "Somente miomas mamários e quistos benignos",
+      "Lesões malignas apenas quando associadas a linfonodomegalia axilar"
+    ],
+    correctIndex: 0,
+    explanation: "A mamografia detecta microcalcificações — sinal mais precoce de câncer de mama — e distorções arquiteturais, antes de qualquer sintoma clínico. Por isso é o padrão-ouro para rastreamento populacional e NÃO pode ser substituída por outro exame."
+  },
+  {
+    question: "Segundo as diretrizes da SBM/CBR/FEBRASGO, com que frequência deve ser realizada a mamografia em mulheres de risco habitual entre 40 e 74 anos?",
+    options: [
+      "Anualmente",
+      "A cada dois anos",
+      "A cada três anos",
+      "Uma única vez aos 40 anos",
+      "Apenas quando há nódulo palpável"
+    ],
+    correctIndex: 0,
+    explanation: "As diretrizes da SBM/CBR/FEBRASGO recomendam mamografia anual para mulheres de risco habitual entre 40 e 74 anos. O Ministério da Saúde recomenda a cada dois anos apenas entre 50 e 69 anos — há diferença importante entre as recomendações."
+  },
+  {
+    question: "Segundo o Ministério da Saúde, qual é o intervalo de rastreamento por mamografia para mulheres de risco habitual?",
+    options: [
+      "A cada dois anos, entre 50 e 69 anos",
+      "Anualmente entre 40 e 74 anos",
+      "A cada três anos entre 35 e 75 anos",
+      "Uma vez ao ano a partir dos 50 anos",
+      "Somente sob demanda clínica, sem protocolo de rastreamento"
+    ],
+    correctIndex: 0,
+    explanation: "O Ministério da Saúde recomenda mamografia a cada dois anos para mulheres entre 50 e 69 anos com risco habitual. Contrasta com a SBM/FEBRASGO que recomendam anualmente dos 40 aos 74 anos."
+  },
+  {
+    question: "Qual é a recomendação de rastreamento mamográfico para mulheres de alto risco (BRCA1/2, TP53, histórico de CA mama/ovário)?",
+    options: [
+      "Início entre 30–35 anos + ressonância magnética anual adicional",
+      "Rastreamento idêntico ao risco habitual (anual a partir dos 40 anos)",
+      "Mamografia semestral a partir dos 20 anos",
+      "Apenas RNM sem necessidade de mamografia",
+      "Mastectomia profilática sem necessidade de rastreamento"
+    ],
+    correctIndex: 0,
+    explanation: "Mulheres de alto risco (BRCA1/2, TP53, histórico pessoal de CA mama/ovário, RT torácica antes dos 30 anos, lesões pré-cancerosas) devem iniciar o rastreamento entre 30–35 anos com mamografia anual associada à ressonância magnética anual."
+  },
+  {
+    question: "Na incidência crânio-caudal (CC) da mamografia, o feixe percorre qual direção e quais quadrantes são evidenciados?",
+    options: [
+      "Feixe de cima para baixo; mostra os quadrantes lateral e medial; músculo peitoral não visível",
+      "Feixe de dentro para fora; mostra os quadrantes superior e inferior; peitoral visível",
+      "Feixe lateral oblíquo; mostra todos os quadrantes simultaneamente",
+      "Feixe de baixo para cima; evidencia o quadrante inferior lateral com peitoral",
+      "Feixe posterior; mostra exclusivamente a região retroareolar"
+    ],
+    correctIndex: 0,
+    explanation: "Na incidência CC, o feixe entra cranialmente (superior) e sai caudalmente (inferior), mostrando os quadrantes lateral e medial. O músculo peitoral NÃO é visualizado. O receptor deve estar voltado para o lateral."
+  },
+  {
+    question: "Na incidência médio-lateral oblíqua (MLO), qual é a característica que a diferencia da CC?",
+    options: [
+      "Músculo peitoral visível; feixe entra medialmente e sai lateralmente; mostra quadrantes superior e inferior",
+      "Músculo peitoral não visível; feixe vertical; mostra apenas quadrantes laterais",
+      "Feixe entra cranialmente; receptor voltado para o lateral; sem peitoral",
+      "Incidência horizontal pura que mostra apenas o nódulo em face",
+      "Feixe de dentro para fora sem angulação; usada exclusivamente em próteses"
+    ],
+    correctIndex: 0,
+    explanation: "Na MLO, o feixe entra medialmente e sai na lateral, mostrando os quadrantes superiores e inferiores. O músculo peitoral É visível. O receptor deve estar voltado para o superior e a linha oblíqua deve estar em 90° com o peitoral."
+  },
+  {
+    question: "Qual tipo de margem nodular na mamografia é considerada benigna, com mais de 70% da borda visível?",
+    options: [
+      "Circunscrita",
+      "Espiculada",
+      "Microlobulada",
+      "Indistinta",
+      "Obscurecida"
+    ],
+    correctIndex: 0,
+    explanation: "Margem circunscrita significa que mais de 70% da borda do nódulo é visível — sugere lesão benigna. As margens microlobulada, indistinta e espiculada são suspeitas de malignidade e requerem biópsia."
+  },
+  {
+    question: "Quais tipos de margem nodular na mamografia indicam necessidade de biópsia?",
+    options: [
+      "Microlobulada, indistinta e espiculada",
+      "Circunscrita, oval e hipodensa",
+      "Obscurecida, redonda e hiperdensa",
+      "Espiculada somente quando associada a microcalcificações",
+      "Apenas margem irregular com calcificações grosseiras"
+    ],
+    correctIndex: 0,
+    explanation: "As margens microlobulada, indistinta e espiculada são suspeitas de malignidade e indicam biópsia. A margem circunscrita (>70% visível) é tipicamente benigna. A margem obscurecida pode ser benigna, mas deve ser avaliada em contexto."
+  },
+  {
+    question: "O que significa a categoria BI-RADS 0 em um laudo de mamografia?",
+    options: [
+      "Exame incompleto — necessita imagens complementares (USG, incidências adicionais)",
+      "Mamografia normal, sem achados — rastreamento anual",
+      "Achados benignos sem necessidade de biópsia",
+      "Lesão altamente suspeita com indicação de biópsia imediata",
+      "Malignidade confirmada por biópsia anterior"
+    ],
+    correctIndex: 0,
+    explanation: "BI-RADS 0 indica exame incompleto que necessita de imagens complementares antes de dar um diagnóstico definitivo. Pode ser necessário USG ou incidências adicionais para caracterizar melhor o achado."
+  },
+  {
+    question: "Uma paciente realizou mamografia e o laudo retornou BI-RADS 3. O que isso significa e qual é a conduta?",
+    options: [
+      "Provavelmente benigno (risco < 2% de malignidade) — seguimento em 6 meses",
+      "Normal — continuar rastreamento anual sem necessidade de retorno precoce",
+      "Achado suspeito — biópsia obrigatória em 30 dias",
+      "Malignidade altamente provável — biópsia urgente e avaliação oncológica",
+      "Exame incompleto — repetir mamografia com compressão localizada"
+    ],
+    correctIndex: 0,
+    explanation: "BI-RADS 3 = provavelmente benigno, com risco de malignidade < 2%. A conduta é seguimento com mamografia em 6 meses (não biópsia imediata). O protocolo prevê: 6m → 12m → 24m. Se estável por 24 meses, reclassifica para BI-RADS 2."
+  },
+  {
+    question: "Qual é o protocolo de seguimento para uma lesão classificada como BI-RADS 3?",
+    options: [
+      "Mamografia aos 6 meses → 12 meses → 24 meses; se estável: rebaixar para BI-RADS 2",
+      "Biópsia imediata seguida de RNM de estadiamento",
+      "Repetir apenas se surgir sintoma clínico (nódulo palpável ou descarga papilar)",
+      "Controle único em 12 meses sem necessidade de seguimentos adicionais",
+      "Alternância entre mamografia e RNM a cada 3 meses indefinidamente"
+    ],
+    correctIndex: 0,
+    explanation: "O protocolo BI-RADS 3: 1º controle em 6 meses → 2º controle em mais 6 meses (12 meses total) → 3º controle em mais 12 meses (24 meses total). Se a lesão permanecer estável por 24 meses: rebaixar para BI-RADS 2. Qualquer mudança: elevar para BI-RADS 4 e biópsia."
+  },
+  {
+    question: "Qual é a diferença entre BI-RADS 4 e BI-RADS 5?",
+    options: [
+      "BI-RADS 4: suspeito com único achado, biópsia indicada; BI-RADS 5: altamente suspeito (>95%), dois achados, biópsia obrigatória",
+      "BI-RADS 4: provavelmente benigno; BI-RADS 5: suspeito com indicação de seguimento",
+      "BI-RADS 4: exclusivamente microcalcificações; BI-RADS 5: exclusivamente nódulos",
+      "BI-RADS 4: seguimento em 6 meses; BI-RADS 5: seguimento em 3 meses",
+      "BI-RADS 4 e BI-RADS 5 têm a mesma conduta, diferindo apenas na nomenclatura"
+    ],
+    correctIndex: 0,
+    explanation: "BI-RADS 4: suspeito (único achado suspeito), subdividido em A, B, C conforme a probabilidade de malignidade — biópsia indicada. BI-RADS 5: altamente suspeito (>95% de malignidade), geralmente com dois achados suspeitos — biópsia obrigatória."
+  },
+  {
+    question: "O que significa BI-RADS 6 em um laudo mamográfico?",
+    options: [
+      "Malignidade já confirmada por biópsia anterior — se nova lesão surgir, reclassificar como BI-RADS 4",
+      "Achado altamente suspeito sem biópsia prévia, requerendo avaliação cirúrgica urgente",
+      "Paciente em seguimento pós-tratamento oncológico sem evidência de recidiva",
+      "Resultado indeterminado aguardando correlação clínica e laboratorial",
+      "Calcificações benignas em paciente com prótese de silicone bilateral"
+    ],
+    correctIndex: 0,
+    explanation: "BI-RADS 6 é atribuído quando há malignidade já confirmada por biópsia anterior — a paciente está em acompanhamento oncológico. Se uma NOVA lesão aparecer nessa mama, ela é reclassificada como BI-RADS 4, pois ainda não tem biópsia."
+  },
+  {
+    question: "A Manobra de Eklund é realizada em qual situação e qual é seu objetivo?",
+    options: [
+      "Pacientes com prótese de silicone — empurra a prótese para trás e a glândula para frente, melhorando a visualização do tecido glandular",
+      "Pacientes com mamas densas — comprime adicionalmente para melhorar a resolução",
+      "Mulheres com cicatriz de mastectomia parcial — avalia a margem cirúrgica",
+      "Pacientes grávidas — reduz a dose de radiação durante a compressão",
+      "Mulheres com nódulo palpável — colima o feixe sobre a lesão de interesse"
+    ],
+    correctIndex: 0,
+    explanation: "A Manobra de Eklund é obrigatória em portadoras de prótese de silicone. A prótese é empurrada posteriormente enquanto a glândula mamária é tracionada para frente, permitindo a compressão e visualização do tecido glandular. Sem ela, a prótese obscurece os achados."
+  },
+  {
+    question: "No sistema de relógio das mamas, um achado descrito como 'nódulo em 12 horas, a 4 cm do mamilo' está localizado:",
+    options: [
+      "Diretamente acima do mamilo, no quadrante superior, a 4 cm de distância",
+      "Diretamente abaixo do mamilo, no quadrante inferior, a 4 cm de distância",
+      "Na lateral esquerda da mama, no quadrante lateral, a 4 cm",
+      "Na lateral direita da mama, no quadrante lateral superior, a 4 cm",
+      "Na região retroareolar central, independente da distância mencionada"
+    ],
+    correctIndex: 0,
+    explanation: "12 horas = diretamente acima do mamilo (polo superior da mama). A distância de 4 cm indica que está a 4 cm do mamilo em direção ao polo superior. O sistema de relógio usa o mamilo como centro e a borda da mama como círculo."
+  },
+  {
+    question: "Na interpretação da mamografia, qual é a regra prática em relação à cor das estruturas na imagem?",
+    options: [
+      "Branco = estruturas densas (suspeitas/relevantes); preto = gordura (benigna)",
+      "Preto = estruturas densas (suspeitas); branco = gordura (benigna)",
+      "Cinza = áreas de interesse; branco e preto são artefatos técnicos",
+      "Branco = calcificações benignas; preto = microcalcificações malignas",
+      "A cor não tem significado específico — a morfologia é o único critério"
+    ],
+    correctIndex: 0,
+    explanation: "Na mamografia: BRANCO = estruturas densas — nódulos, calcificações, tecido glandular — são os achados que devem ser analisados com atenção. PRETO = gordura — é benigna. A regra prática: preocupe-se com o que aparece em branco."
+  },
+  {
+    question: "Um achado de nódulo com margens microlobuladas e hiperdenso em uma mamografia deve receber qual classificação BI-RADS mínima?",
+    options: [
+      "BI-RADS 4 — margens microlobuladas são suspeitas e indicam biópsia",
+      "BI-RADS 2 — nódulo hiperdenso é achado benigno",
+      "BI-RADS 3 — seguimento em 6 meses sem necessidade imediata de biópsia",
+      "BI-RADS 1 — normal, rastreamento anual mantido",
+      "BI-RADS 0 — imagens complementares antes de classificar"
+    ],
+    correctIndex: 0,
+    explanation: "Margens microlobuladas são uma das três margens que indicam suspeita de malignidade (junto com indistinta e espiculada), portanto o achado deve ser categorizado como BI-RADS 4 no mínimo, com indicação de biópsia."
+  },
+  {
+    question: "Qual das seguintes situações é indicação de início precoce de rastreamento mamográfico, antes dos 40 anos?",
+    options: [
+      "Histórico de radioterapia torácica antes dos 30 anos",
+      "Uso de anticoncepcionais orais por mais de 5 anos",
+      "Menopausa precoce antes dos 40 anos",
+      "Nulíparidade em mulher com 35 anos",
+      "Menarca precoce antes dos 11 anos"
+    ],
+    correctIndex: 0,
+    explanation: "Radioterapia torácica antes dos 30 anos é um dos critérios de alto risco que indica início de rastreamento entre 30–35 anos com mamografia + RNM anual. Outros critérios: BRCA1/2, TP53, histórico pessoal de CA mama/ovário, lesões mamárias pré-cancerosas."
+  }
+];
+
+function shuffleQuestion(q) {
+  const correctText = q.options[q.correctIndex];
+  const shuffled = [...q.options];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return { ...q, options: shuffled, correctIndex: shuffled.indexOf(correctText) };
+}
+
+let questions = [];
+let current = 0;
+let correct = 0;
+let wrong = 0;
+
+function startQuiz() {
+  questions = rawQuestions.map(shuffleQuestion).sort(() => Math.random() - 0.5);
+  current = 0; correct = 0; wrong = 0;
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[current];
+  const total = questions.length;
+  document.getElementById('progress-label').textContent = `Questão ${current + 1} de ${total}`;
+  document.getElementById('progress-bar').style.width = `${((current) / total) * 100}%`;
+  document.getElementById('question-text').textContent = q.question;
+  document.getElementById('explanation').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'none';
+
+  const optDiv = document.getElementById('options');
+  optDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    optDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(selected) {
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  if (selected === q.correctIndex) {
+    btns[selected].classList.add('correct');
+    correct++;
+  } else {
+    btns[selected].classList.add('wrong');
+    btns[q.correctIndex].classList.add('correct');
+    wrong++;
+  }
+  const exp = document.getElementById('explanation');
+  exp.textContent = q.explanation;
+  exp.style.display = 'block';
+  document.getElementById('btn-next').style.display = 'inline-block';
+  document.getElementById('btn-next').textContent = current + 1 < questions.length ? 'Proxima →' : 'Ver resultado';
+}
+
+function nextQuestion() {
+  current++;
+  if (current < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  const res = document.getElementById('result-screen');
+  res.style.display = 'block';
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong;
+  document.getElementById('stat-total').textContent = questions.length;
+}
+
+function restartQuiz() {
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('start-screen').style.display = 'block';
+}
+</script>
+</body>
+</html>
