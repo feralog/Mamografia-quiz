@@ -110,11 +110,11 @@ const rawQuestions = [
   {
     question: "A mamografia é considerada o exame padrão-ouro para rastreamento do câncer de mama pois é capaz de detectar:",
     options: [
-      "Microcalcificações (sinal mais precoce) e distorções arquiteturais, antes de qualquer sintoma clínico",
+      "Microcalcificações e distorções arquiteturais, pré-clínicas",
       "Apenas nódulos palpáveis maiores de 1 cm na fase clínica",
-      "Exclusivamente lesões vascularizadas ao Doppler colorido",
-      "Somente miomas mamários e quistos benignos",
-      "Lesões malignas apenas quando associadas a linfonodomegalia axilar"
+      "Lesões vascularizadas detectadas ao Doppler colorido",
+      "Miomas mamários e quistos benignos com baixo risco",
+      "Lesões malignas associadas a linfonodomegalia axilar"
     ],
     correctIndex: 0,
     explanation: "A mamografia detecta microcalcificações — sinal mais precoce de câncer de mama — e distorções arquiteturais, antes de qualquer sintoma clínico. Por isso é o padrão-ouro para rastreamento populacional e NÃO pode ser substituída por outro exame."
@@ -122,11 +122,11 @@ const rawQuestions = [
   {
     question: "Segundo as diretrizes da SBM/CBR/FEBRASGO, com que frequência deve ser realizada a mamografia em mulheres de risco habitual entre 40 e 74 anos?",
     options: [
-      "Anualmente",
-      "A cada dois anos",
-      "A cada três anos",
-      "Uma única vez aos 40 anos",
-      "Apenas quando há nódulo palpável"
+      "Anualmente, dos 40 aos 74 anos (risco habitual)",
+      "A cada dois anos, dos 50 aos 69 anos, segundo o MS",
+      "A cada três anos, entre os 35 e 75 anos",
+      "Uma única vez aos 40 anos como rastreamento basal",
+      "Apenas sob indicação clínica, sem intervalo fixo"
     ],
     correctIndex: 0,
     explanation: "As diretrizes da SBM/CBR/FEBRASGO recomendam mamografia anual para mulheres de risco habitual entre 40 e 74 anos. O Ministério da Saúde recomenda a cada dois anos apenas entre 50 e 69 anos — há diferença importante entre as recomendações."
@@ -134,11 +134,11 @@ const rawQuestions = [
   {
     question: "Segundo o Ministério da Saúde, qual é o intervalo de rastreamento por mamografia para mulheres de risco habitual?",
     options: [
-      "A cada dois anos, entre 50 e 69 anos",
-      "Anualmente entre 40 e 74 anos",
-      "A cada três anos entre 35 e 75 anos",
-      "Uma vez ao ano a partir dos 50 anos",
-      "Somente sob demanda clínica, sem protocolo de rastreamento"
+      "A cada dois anos, entre 50 e 69 anos (MS)",
+      "Anualmente, entre 40 e 74 anos (SBM/FEBRASGO)",
+      "A cada três anos, entre 35 e 75 anos (INCA)",
+      "Anualmente a partir dos 50 anos, sem limite de idade",
+      "Apenas sob demanda, sem protocolo de rastreamento"
     ],
     correctIndex: 0,
     explanation: "O Ministério da Saúde recomenda mamografia a cada dois anos para mulheres entre 50 e 69 anos com risco habitual. Contrasta com a SBM/FEBRASGO que recomendam anualmente dos 40 aos 74 anos."
@@ -146,10 +146,10 @@ const rawQuestions = [
   {
     question: "Qual é a recomendação de rastreamento mamográfico para mulheres de alto risco (BRCA1/2, TP53, histórico de CA mama/ovário)?",
     options: [
-      "Início entre 30–35 anos + ressonância magnética anual adicional",
-      "Rastreamento idêntico ao risco habitual (anual a partir dos 40 anos)",
-      "Mamografia semestral a partir dos 20 anos",
-      "Apenas RNM sem necessidade de mamografia",
+      "Início entre 30–35 anos com mamografia + RNM anuais",
+      "Rastreamento anual idêntico ao risco habitual (40 anos)",
+      "Mamografia semestral iniciando aos 20 anos de idade",
+      "RNM exclusiva, dispensando mamografia em alto risco",
       "Mastectomia profilática sem necessidade de rastreamento"
     ],
     correctIndex: 0,
@@ -158,11 +158,11 @@ const rawQuestions = [
   {
     question: "Na incidência crânio-caudal (CC) da mamografia, o feixe percorre qual direção e quais quadrantes são evidenciados?",
     options: [
-      "Feixe de cima para baixo; mostra os quadrantes lateral e medial; músculo peitoral não visível",
-      "Feixe de dentro para fora; mostra os quadrantes superior e inferior; peitoral visível",
-      "Feixe lateral oblíquo; mostra todos os quadrantes simultaneamente",
-      "Feixe de baixo para cima; evidencia o quadrante inferior lateral com peitoral",
-      "Feixe posterior; mostra exclusivamente a região retroareolar"
+      "Crânio-caudal: sup→inf, quadrantes lat e med, sem peitoral",
+      "Médio-lateral oblíqua: med→lat, quadrantes sup e inf, com peitoral",
+      "Lateral oblíqua: lat→med, todos quadrantes, com peitoral",
+      "Caudal-cranial: inf→sup, quadrante inf lateral, com peitoral",
+      "Retroareolar pura: posterior, só região areolar, sem peitoral"
     ],
     correctIndex: 0,
     explanation: "Na incidência CC, o feixe entra cranialmente (superior) e sai caudalmente (inferior), mostrando os quadrantes lateral e medial. O músculo peitoral NÃO é visualizado. O receptor deve estar voltado para o lateral."
@@ -170,11 +170,11 @@ const rawQuestions = [
   {
     question: "Na incidência médio-lateral oblíqua (MLO), qual é a característica que a diferencia da CC?",
     options: [
-      "Músculo peitoral visível; feixe entra medialmente e sai lateralmente; mostra quadrantes superior e inferior",
-      "Músculo peitoral não visível; feixe vertical; mostra apenas quadrantes laterais",
-      "Feixe entra cranialmente; receptor voltado para o lateral; sem peitoral",
-      "Incidência horizontal pura que mostra apenas o nódulo em face",
-      "Feixe de dentro para fora sem angulação; usada exclusivamente em próteses"
+      "MLO: peitoral visível, feixe med→lat, quadrantes sup e inf",
+      "CC: peitoral não visível, feixe sup→inf, quadrantes lat e med",
+      "CC lateral: peitoral ausente, feixe cranial, receptor lateral",
+      "Incidência horizontal: feixe puro, nódulo em face sem angulação",
+      "Eklund: feixe med→lat sem angulação, exclusiva em próteses"
     ],
     correctIndex: 0,
     explanation: "Na MLO, o feixe entra medialmente e sai na lateral, mostrando os quadrantes superiores e inferiores. O músculo peitoral É visível. O receptor deve estar voltado para o superior e a linha oblíqua deve estar em 90° com o peitoral."
@@ -182,11 +182,11 @@ const rawQuestions = [
   {
     question: "Qual tipo de margem nodular na mamografia é considerada benigna, com mais de 70% da borda visível?",
     options: [
-      "Circunscrita",
-      "Espiculada",
-      "Microlobulada",
-      "Indistinta",
-      "Obscurecida"
+      "Circunscrita (>70% da borda visível, benigna)",
+      "Espiculada (irradiação periférica, suspeita)",
+      "Microlobulada (ondulações, suspeita de malignidade)",
+      "Indistinta (bordas mal definidas, suspeita)",
+      "Obscurecida (parcialmente oculta por tecido denso)"
     ],
     correctIndex: 0,
     explanation: "Margem circunscrita significa que mais de 70% da borda do nódulo é visível — sugere lesão benigna. As margens microlobulada, indistinta e espiculada são suspeitas de malignidade e requerem biópsia."
@@ -197,8 +197,8 @@ const rawQuestions = [
       "Microlobulada, indistinta e espiculada",
       "Circunscrita, oval e hipodensa",
       "Obscurecida, redonda e hiperdensa",
-      "Espiculada somente quando associada a microcalcificações",
-      "Apenas margem irregular com calcificações grosseiras"
+      "Espiculada, calcificada e lobulada",
+      "Irregular, puntata e segmentar"
     ],
     correctIndex: 0,
     explanation: "As margens microlobulada, indistinta e espiculada são suspeitas de malignidade e indicam biópsia. A margem circunscrita (>70% visível) é tipicamente benigna. A margem obscurecida pode ser benigna, mas deve ser avaliada em contexto."
@@ -206,11 +206,11 @@ const rawQuestions = [
   {
     question: "O que significa a categoria BI-RADS 0 em um laudo de mamografia?",
     options: [
-      "Exame incompleto — necessita imagens complementares (USG, incidências adicionais)",
-      "Mamografia normal, sem achados — rastreamento anual",
-      "Achados benignos sem necessidade de biópsia",
-      "Lesão altamente suspeita com indicação de biópsia imediata",
-      "Malignidade confirmada por biópsia anterior"
+      "BI-RADS 0 — exame incompleto, complementação necessária",
+      "BI-RADS 1 — normal, sem achados, rastreamento anual",
+      "BI-RADS 2 — achados benignos, sem necessidade de biópsia",
+      "BI-RADS 4 — suspeito, biópsia obrigatória imediata",
+      "BI-RADS 6 — malignidade confirmada por biópsia anterior"
     ],
     correctIndex: 0,
     explanation: "BI-RADS 0 indica exame incompleto que necessita de imagens complementares antes de dar um diagnóstico definitivo. Pode ser necessário USG ou incidências adicionais para caracterizar melhor o achado."
@@ -218,11 +218,11 @@ const rawQuestions = [
   {
     question: "Uma paciente realizou mamografia e o laudo retornou BI-RADS 3. O que isso significa e qual é a conduta?",
     options: [
-      "Provavelmente benigno (risco < 2% de malignidade) — seguimento em 6 meses",
-      "Normal — continuar rastreamento anual sem necessidade de retorno precoce",
-      "Achado suspeito — biópsia obrigatória em 30 dias",
-      "Malignidade altamente provável — biópsia urgente e avaliação oncológica",
-      "Exame incompleto — repetir mamografia com compressão localizada"
+      "Provavelmente benigno (< 2% de malignidade) — seguimento em 6 meses",
+      "Normal, sem achados — rastreamento anual, sem retorno precoce",
+      "Suspeito de malignidade — biópsia obrigatória em 30 dias",
+      "Altamente suspeito (> 95%) — biópsia urgente e estadiamento",
+      "Incompleto — imagens complementares antes de classificar"
     ],
     correctIndex: 0,
     explanation: "BI-RADS 3 = provavelmente benigno, com risco de malignidade < 2%. A conduta é seguimento com mamografia em 6 meses (não biópsia imediata). O protocolo prevê: 6m → 12m → 24m. Se estável por 24 meses, reclassifica para BI-RADS 2."
@@ -230,11 +230,11 @@ const rawQuestions = [
   {
     question: "Qual é o protocolo de seguimento para uma lesão classificada como BI-RADS 3?",
     options: [
-      "Mamografia aos 6 meses → 12 meses → 24 meses; se estável: rebaixar para BI-RADS 2",
-      "Biópsia imediata seguida de RNM de estadiamento",
-      "Repetir apenas se surgir sintoma clínico (nódulo palpável ou descarga papilar)",
-      "Controle único em 12 meses sem necessidade de seguimentos adicionais",
-      "Alternância entre mamografia e RNM a cada 3 meses indefinidamente"
+      "Mamografia em 6m → 12m → 24m; estável → reclassificar para BI-RADS 2",
+      "Biópsia imediata com congelação e RNM para estadiamento",
+      "Controle apenas com sintomas clínicos (nódulo ou descarga)",
+      "Controle único em 12 meses sem novos seguimentos programados",
+      "Alternância entre mamografia e RNM a cada 3 meses até resolução"
     ],
     correctIndex: 0,
     explanation: "O protocolo BI-RADS 3: 1º controle em 6 meses → 2º controle em mais 6 meses (12 meses total) → 3º controle em mais 12 meses (24 meses total). Se a lesão permanecer estável por 24 meses: rebaixar para BI-RADS 2. Qualquer mudança: elevar para BI-RADS 4 e biópsia."
@@ -242,11 +242,11 @@ const rawQuestions = [
   {
     question: "Qual é a diferença entre BI-RADS 4 e BI-RADS 5?",
     options: [
-      "BI-RADS 4: suspeito com único achado, biópsia indicada; BI-RADS 5: altamente suspeito (>95%), dois achados, biópsia obrigatória",
-      "BI-RADS 4: provavelmente benigno; BI-RADS 5: suspeito com indicação de seguimento",
-      "BI-RADS 4: exclusivamente microcalcificações; BI-RADS 5: exclusivamente nódulos",
-      "BI-RADS 4: seguimento em 6 meses; BI-RADS 5: seguimento em 3 meses",
-      "BI-RADS 4 e BI-RADS 5 têm a mesma conduta, diferindo apenas na nomenclatura"
+      "BI-RADS 4: suspeito (1 achado), biópsia indicada; 5: altamente suspeito (2 achados)",
+      "BI-RADS 4: provavelmente benigno; BI-RADS 5: suspeito com seguimento de 3 meses",
+      "BI-RADS 4: exclusivo de microcalcificações; BI-RADS 5: exclusivo de nódulos",
+      "BI-RADS 4: seguimento em 6 meses; BI-RADS 5: seguimento em 3 meses somente",
+      "BI-RADS 4 e 5 têm a mesma conduta de biópsia, diferindo só na nomenclatura"
     ],
     correctIndex: 0,
     explanation: "BI-RADS 4: suspeito (único achado suspeito), subdividido em A, B, C conforme a probabilidade de malignidade — biópsia indicada. BI-RADS 5: altamente suspeito (>95% de malignidade), geralmente com dois achados suspeitos — biópsia obrigatória."
@@ -254,9 +254,9 @@ const rawQuestions = [
   {
     question: "O que significa BI-RADS 6 em um laudo mamográfico?",
     options: [
-      "Malignidade já confirmada por biópsia anterior — se nova lesão surgir, reclassificar como BI-RADS 4",
-      "Achado altamente suspeito sem biópsia prévia, requerendo avaliação cirúrgica urgente",
-      "Paciente em seguimento pós-tratamento oncológico sem evidência de recidiva",
+      "Malignidade confirmada por biópsia; nova lesão → reclassificar como BI-RADS 4",
+      "Achado altamente suspeito sem biópsia prévia, avaliação cirúrgica urgente",
+      "Seguimento pós-tratamento oncológico sem evidência de recidiva ativa",
       "Resultado indeterminado aguardando correlação clínica e laboratorial",
       "Calcificações benignas em paciente com prótese de silicone bilateral"
     ],
@@ -266,11 +266,11 @@ const rawQuestions = [
   {
     question: "A Manobra de Eklund é realizada em qual situação e qual é seu objetivo?",
     options: [
-      "Pacientes com prótese de silicone — empurra a prótese para trás e a glândula para frente, melhorando a visualização do tecido glandular",
-      "Pacientes com mamas densas — comprime adicionalmente para melhorar a resolução",
-      "Mulheres com cicatriz de mastectomia parcial — avalia a margem cirúrgica",
-      "Pacientes grávidas — reduz a dose de radiação durante a compressão",
-      "Mulheres com nódulo palpável — colima o feixe sobre a lesão de interesse"
+      "Portadoras de prótese de silicone — prótese empurrada, glândula avançada",
+      "Mamas densas (BIRADS D) — compressão focalizada melhora resolução da imagem",
+      "Cicatriz de mastectomia parcial — permite avaliar margem cirúrgica residual",
+      "Gestantes — colimação reduz a dose de radiação ao mínimo durante compressão",
+      "Nódulo palpável — feixe colimado diretamente sobre a lesão de interesse"
     ],
     correctIndex: 0,
     explanation: "A Manobra de Eklund é obrigatória em portadoras de prótese de silicone. A prótese é empurrada posteriormente enquanto a glândula mamária é tracionada para frente, permitindo a compressão e visualização do tecido glandular. Sem ela, a prótese obscurece os achados."
@@ -278,11 +278,11 @@ const rawQuestions = [
   {
     question: "No sistema de relógio das mamas, um achado descrito como 'nódulo em 12 horas, a 4 cm do mamilo' está localizado:",
     options: [
-      "Diretamente acima do mamilo, no quadrante superior, a 4 cm de distância",
-      "Diretamente abaixo do mamilo, no quadrante inferior, a 4 cm de distância",
-      "Na lateral esquerda da mama, no quadrante lateral, a 4 cm",
-      "Na lateral direita da mama, no quadrante lateral superior, a 4 cm",
-      "Na região retroareolar central, independente da distância mencionada"
+      "Diretamente acima do mamilo, quadrante superior, 4 cm do mamilo",
+      "Diretamente abaixo do mamilo, quadrante inferior, 4 cm do mamilo",
+      "Na lateral esquerda da mama, quadrante externo, 4 cm do mamilo",
+      "Na lateral direita da mama, quadrante externo superior, 4 cm",
+      "Na região retroareolar central, independente da distância"
     ],
     correctIndex: 0,
     explanation: "12 horas = diretamente acima do mamilo (polo superior da mama). A distância de 4 cm indica que está a 4 cm do mamilo em direção ao polo superior. O sistema de relógio usa o mamilo como centro e a borda da mama como círculo."
@@ -302,11 +302,11 @@ const rawQuestions = [
   {
     question: "Um achado de nódulo com margens microlobuladas e hiperdenso em uma mamografia deve receber qual classificação BI-RADS mínima?",
     options: [
-      "BI-RADS 4 — margens microlobuladas são suspeitas e indicam biópsia",
-      "BI-RADS 2 — nódulo hiperdenso é achado benigno",
-      "BI-RADS 3 — seguimento em 6 meses sem necessidade imediata de biópsia",
-      "BI-RADS 1 — normal, rastreamento anual mantido",
-      "BI-RADS 0 — imagens complementares antes de classificar"
+      "BI-RADS 4 — margem suspeita, biópsia indicada",
+      "BI-RADS 2 — achado benigno, sem seguimento adicional",
+      "BI-RADS 3 — provavelmente benigno, controle em 6 meses",
+      "BI-RADS 1 — normal, rastreamento anual sem alteração",
+      "BI-RADS 0 — incompleto, imagens adicionais necessárias"
     ],
     correctIndex: 0,
     explanation: "Margens microlobuladas são uma das três margens que indicam suspeita de malignidade (junto com indistinta e espiculada), portanto o achado deve ser categorizado como BI-RADS 4 no mínimo, com indicação de biópsia."
@@ -314,11 +314,11 @@ const rawQuestions = [
   {
     question: "Qual das seguintes situações é indicação de início precoce de rastreamento mamográfico, antes dos 40 anos?",
     options: [
-      "Histórico de radioterapia torácica antes dos 30 anos",
-      "Uso de anticoncepcionais orais por mais de 5 anos",
-      "Menopausa precoce antes dos 40 anos",
-      "Nulíparidade em mulher com 35 anos",
-      "Menarca precoce antes dos 11 anos"
+      "Radioterapia torácica antes dos 30 anos de idade",
+      "Uso de anticoncepcionais orais há mais de 5 anos",
+      "Menopausa precoce com cessação antes dos 40 anos",
+      "Nulíparidade em mulher acima dos 30 anos de idade",
+      "Menarca precoce ocorrida antes dos 11 anos de vida"
     ],
     correctIndex: 0,
     explanation: "Radioterapia torácica antes dos 30 anos é um dos critérios de alto risco que indica início de rastreamento entre 30–35 anos com mamografia + RNM anual. Outros critérios: BRCA1/2, TP53, histórico pessoal de CA mama/ovário, lesões mamárias pré-cancerosas."
